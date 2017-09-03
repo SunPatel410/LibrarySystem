@@ -5,39 +5,68 @@ using System.Text;
 using System.Threading.Tasks;
 using LibraryData.Domain;
 using LibraryServices.Interfaces;
+using LibraryData;
+using Microsoft.EntityFrameworkCore;
 
 namespace LibraryServices
 {
     public class PatronService : IPatron
     {
+        private readonly LibraryContext _context;
+
+        public PatronService(LibraryContext context)
+        {
+            _context = context;
+        }
+
         public Patron Get(int id)
         {
-            throw new NotImplementedException();
+            return GetAll().FirstOrDefault(p => p.Id == id);
         }
 
         public IEnumerable<Patron> GetAll()
         {
-            throw new NotImplementedException();
+            return _context.Patrons
+                .Include(p => p.LibraryCard)
+                .Include(p => p.HomeLibraryBranch);
         }
 
         public void Add(Patron newPatron)
         {
-            throw new NotImplementedException();
+            _context.Add(newPatron);
+            _context.SaveChanges();
         }
 
         public IEnumerable<CheckoutHistory> GetCheckoutHistory(int patronId)
         {
-            throw new NotImplementedException();
+            var cardId = Get(patronId).LibraryCard.Id;
+
+            return _context.CheckoutHistories
+                .Include(co => co.LibraryCard)
+                .Include(co => co.LibraryAsset)
+                .Where(co => co.LibraryCard.Id == cardId)
+                .OrderByDescending(co => co.CheckedOut);
         }
 
         public IEnumerable<Hold> GetHolds(int patronId)
         {
-            throw new NotImplementedException();
+            var cardId = Get(patronId).LibraryCard.Id;
+
+            return _context.Holds
+                .Include(h => h.LibraryCard)
+                .Include(h => h.LibraryAsset)
+                .Where(h => h.LibraryCard.Id == cardId)
+                .OrderByDescending(h => h.HoldPlaced);
         }
 
         public IEnumerable<Checkout> GetCheckouts(int patronId)
         {
-            throw new NotImplementedException();
+            var cardId = Get(patronId).LibraryCard.Id;
+
+            return _context.Checkouts
+                .Include(co => co.LibraryCard)
+                .Include(co => co.LibraryAsset)
+                .Where(co => co.LibraryCard.Id == cardId);
         }
     }
 }
