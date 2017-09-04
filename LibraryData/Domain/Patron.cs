@@ -16,6 +16,6 @@ namespace LibraryData.Domain
         public virtual LibraryCard LibraryCard { get; set; }
         public virtual LibraryBranch HomeLibraryBranch { get; set; }
 
-        public string FullName => string.Format("{0} {1}", FirstName, LastName);
+        public string FullName => $"{FirstName} {LastName}";
     }
 }

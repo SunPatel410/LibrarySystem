@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using Library.ViewModels.Catalog;
-using Library.ViewModels.Checkout;
+using Library.ViewModels.CheckoutViewModel;
 using LibraryServices.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
