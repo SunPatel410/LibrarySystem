@@ -1,5 +1,8 @@
 # LibrarySystem
 
-Library system that has been Implemented using DDD pattern. 
+Library system that has been Implemented in .NET CORE. 
 
-(still a working progress)
+Things I need to be implemented :_
+=> DDD design
+=> Unit of Work
+=> use Dapper insetad of EF.CORE
