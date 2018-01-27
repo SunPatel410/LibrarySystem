@@ -222,7 +222,7 @@ namespace LibraryData.Migrations
                 {
                     b.HasBaseType("LibraryData.Domain.LibraryAsset");
 
-                    b.Property<string>("Aurthor")
+                    b.Property<string>("Author")
                         .IsRequired();
 
                     b.Property<string>("DeweyIndex")

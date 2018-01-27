@@ -122,7 +122,7 @@ namespace LibraryData.Migrations
                     StatusId = table.Column<int>(nullable: false),
                     Title = table.Column<string>(nullable: false),
                     Year = table.Column<int>(nullable: false),
-                    Aurthor = table.Column<string>(nullable: true),
+                    Author = table.Column<string>(nullable: true),
                     DeweyIndex = table.Column<string>(nullable: true),
                     ISBN = table.Column<string>(nullable: true),
                     Director = table.Column<string>(nullable: true)
