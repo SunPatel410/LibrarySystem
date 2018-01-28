@@ -8,7 +8,7 @@ using LibraryData;
 namespace LibraryData.Migrations
 {
     [DbContext(typeof(LibraryContext))]
-    [Migration("20170811123513_setupTables")]
+    [Migration("20180127172246_setupTables")]
     partial class setupTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -223,7 +223,7 @@ namespace LibraryData.Migrations
                 {
                     b.HasBaseType("LibraryData.Domain.LibraryAsset");
 
-                    b.Property<string>("Aurthor")
+                    b.Property<string>("Author")
                         .IsRequired();
 
                     b.Property<string>("DeweyIndex")

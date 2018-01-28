@@ -9,6 +9,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LibraryServices
 {
+    /// <summary>
+    /// TODO ADD REPOSITORY PATTERN INSETAD OF USING CONTEXT
+    /// </summary>
     public class LibraryAssetService : ILibraryAsset
     {
         private readonly LibraryContext _context;
