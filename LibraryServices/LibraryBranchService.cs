@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using LibraryData;
 using LibraryData.Domain;
 using LibraryServices.Interfaces;
@@ -12,7 +10,7 @@ namespace LibraryServices
 {
     public class LibraryBranchService : ILibraryBranch
     {
-        private LibraryContext _context;
+        private readonly LibraryContext _context;
 
         public LibraryBranchService(LibraryContext context)
         {
@@ -28,7 +26,8 @@ namespace LibraryServices
 
         public IEnumerable<Patron> GetPatrons(int branchId)
         {
-            throw new NotImplementedException();
+            return _context.LibraryBranches
+                .Include(b => b.Patrons).FirstOrDefault(b => b.Id == branchId)?.Patrons;
         }
 
         public IEnumerable<LibraryAsset> GetAssets(int branchId)
@@ -41,7 +40,7 @@ namespace LibraryServices
         public IEnumerable<string> GetBranchHours(int branchId)
         {
             var hours = _context.BranchHours.Where(h => h.Branch.Id == branchId);
-
+            return DataHelpers.HumanizeBizHours(hours);
         }
 
         public LibraryBranch Get(int branchId)
@@ -57,7 +56,12 @@ namespace LibraryServices
 
         public bool IsBranchOpen(int branchId)
         {
-            throw new NotImplementedException();
+            var currentTimeHour = DateTime.Now.Hour;
+            var currentDayOfWeek = (int) DateTime.Now.DayOfWeek + 1;
+            var hours = _context.BranchHours.Where(h => h.Branch.Id == branchId);
+            var daysHours = hours.FirstOrDefault(h => h.DayOfWeek == currentDayOfWeek);
+
+            return currentTimeHour < daysHours.CloseTime && currentTimeHour > daysHours.OpenTime;
         }
     }
 }

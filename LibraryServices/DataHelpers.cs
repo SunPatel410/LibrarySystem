@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using LibraryData.Domain;
 
 namespace LibraryServices
 {
     public class DataHelpers
     {
-        public IEnumerable<string> HumanizeBizHours(IEnumerable<BranchHours> branchHours)
+        public static IEnumerable<string> HumanizeBizHours(IEnumerable<BranchHours> branchHours)
         {
             var hours = new List<string>();
 
@@ -17,7 +14,7 @@ namespace LibraryServices
             {
                 var day = HumanizeDay(time.DayOfWeek);
                 var openTime = HumanizeTime(time.OpenTime);
-                var closeTime = HumanizeCloseTime(time.CloseTime);
+                var closeTime = HumanizeTime(time.CloseTime);
 
                 var timeEntry = $"{day} {openTime} to {closeTime}";
                 hours.Add(timeEntry);
@@ -26,19 +23,14 @@ namespace LibraryServices
             return hours;
         }
 
-        private string HumanizeCloseTime(int timeCloseTime)
+        private static string HumanizeTime(int time)
         {
-            throw new NotImplementedException();
+            return TimeSpan.FromHours(time).ToString("hh':'mm");
         }
 
-        private string HumanizeTime(int timeOpenTime)
+        private static string HumanizeDay(int number)
         {
-            throw new NotImplementedException();
-        }
-
-        private string HumanizeDay(int timeDayOfWeek)
-        {
-            throw new NotImplementedException();
+            return Enum.GetName(typeof(DayOfWeek), number);
         }
     }
 }
