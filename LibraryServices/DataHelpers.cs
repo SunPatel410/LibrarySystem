@@ -30,7 +30,8 @@ namespace LibraryServices
 
         private static string HumanizeDay(int number)
         {
-            return Enum.GetName(typeof(DayOfWeek), number);
+            //our data corrleates 1 -> Sunday so subtract 1
+            return Enum.GetName(typeof(DayOfWeek), number - 1);
         }
     }
 }
